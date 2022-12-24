@@ -8,22 +8,27 @@ import { IoLibrary } from "react-icons/io5";
 import { MdSpaceDashboard } from "react-icons/md";
 import logo from "../../assets/logo.png";
 
+const removeToken = () => {
+  localStorage.clear();
+  window.location.reload();
+}
+
 export default function Sidebar() {
   return (
     <div className="sidebar-container">
       <img width="150px" height="150px" src={logo} alt="" />
       <div>
         <SidebarButton title="Feed" to="/feed" icon={<MdSpaceDashboard />} />
-        <SidebarButton title="Trending" to="/trending" icon={<FaGripfire />} />
+        <SidebarButton title="Releases" to="/trending" icon={<FaGripfire />} />
         <SidebarButton title="Player" to="/player" icon={<FaPlay />} />
         <SidebarButton
-          title="Favorites"
-          to="/favorites"
+          title="Recomended"
+          to="/recomended"
           icon={<MdFavorite />}
         />
         <SidebarButton title="Library" to="/" icon={<IoLibrary />} />
       </div>
-      <SidebarButton title="Sign Out" to="" icon={<FaSignOutAlt />} />
+      <SidebarButton to="" action={removeToken} title="Sign Out" icon={<FaSignOutAlt/>} />
     </div>
   );
 }

@@ -21,6 +21,7 @@ export default function Player() {
           setTracks(res.data.items);
           setCurrentTrack(res.data?.items[0]?.track);
         });
+        
     }
   }, [location.state]);
 

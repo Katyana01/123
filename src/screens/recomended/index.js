@@ -5,19 +5,18 @@ import "../library/library.css";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../spotify";
 
-export default function Trending() {
+export default function Recomended() {
    // Состояние плейлистов(playlist - плейлисты, setplaylist - назначить плейлист в массив playlist)
-   
-   const [newRelease, setNewRelease] = useState([]);
+   const [featured, setFeatured] = useState([]);
 
    // Передаем рекомундуемые плейлисты через UseEffect используя ID артиста
    useEffect(() => {
       // Рекомендуемы плейлисты для пользователя
       apiClient
-         .get(`/browse/new-releases`)
+         .get(`/browse/featured-playlists`)
          .then((res) => {
-            const a = res.data?.albums.items.slice(0, 10);
-            setNewRelease(a);
+            const a = res.data?.playlists.items.slice(0, 10);
+            setFeatured(a);
          })
          .catch((err) => console.error(err));
    }, []);
@@ -33,21 +32,19 @@ export default function Trending() {
    return (
       <div className="screen-container">
          <div className="library-body">
-            {newRelease?.map((album) => (
-               
+            {featured?.map((playlist) => (
                <div
                   className="playlist-card"
-                  key={album.id}
-                  onClick={() => playPlaylist(album.id)}
+                  key={playlist.id}
+                  onClick={() => playPlaylist(playlist.id)}
                >
-                  
                   <img
-                     src={album.images[0].url}
+                     src={playlist.images[0].url}
                      className="playlist-image"
                      alt="Playlist-Art"
                   />
-                  <p className="playlist-title">{album.name}</p>
-                  <p className="playlist-subtitle">{album.artists.name} Album</p>
+                  <p className="playlist-title">{playlist.name}</p>
+                  <p className="playlist-subtitle">{playlist.tracks.total} Songs</p>
                   <div className="playlist-fade">
                      <IconContext.Provider value={{ size: "50px", color: "#E99D72" }}>
                         <AiFillPlayCircle />
@@ -59,4 +56,3 @@ export default function Trending() {
       </div>
    )
 }
-
